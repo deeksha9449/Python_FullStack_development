@@ -1,0 +1,35 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student_form</title>
+</head>
+<body>
+    <form method="POST" action="{% url 'add' %}">
+        {% csrf_token %}
+        <diV>
+            <label>Register Number:</label>
+            <input type="number" name="reg_no" required>
+        </diV>
+        <diV>
+            <label>Name:</label>
+            <input type="text" name="name" required>
+        </diV>
+        <diV>
+            <label>Email:</label>
+            <input type="email" name="email" required>
+        </diV>
+        <diV>
+            <label>Marks:</label>
+            <input type="number" name="marks" required>
+        </diV>
+        <diV>
+            <label>DOB</label>
+            <input type="date" name="dob" required>
+        </diV>
+        <button type="Submit">Save Form</button>
+
+    </form>
+    
+</body>
+</html>
