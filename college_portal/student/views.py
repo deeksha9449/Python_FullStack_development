@@ -4,6 +4,11 @@ from .models import Student_table
 from .forms import Student_form_data
 from django.contrib.auth import authenticate,login,logout
 from django.contrib.auth.decorators import login_required
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Student_table
+from .serializers import StudentSerializer
 
 # Create your views here.
 def home(request):
@@ -58,8 +63,24 @@ def dashboard(request):
 def user_logout(request):
     if request.method=='POST':
         logout(request)
-        return HttpResponse("You have logout succesfully")
+        return render(request,'logout.html')
     return HttpResponse("Invalid request")
+@api_view(['GET','POST'])
+def student_api(request):
+    if request.method == 'GET':
+        students = Student_table.objects.all()
+        serializer = StudentSerializer(students,many=True)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+    elif request.method == 'POST':
+        serializer = StudentSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,
+                status=status.HTTP_400_BAD_REQUEST
+                
+                )
+    
     
     
 
